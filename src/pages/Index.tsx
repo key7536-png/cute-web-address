@@ -61,42 +61,43 @@ const Index = () => {
       </div>
 
       {/* Top brand (앱 네비게이션 - 로고 + 앱이름 항상 노출) */}
-      <header className="sticky top-0 z-40 bg-card/95 backdrop-blur border-b border-border">
-        <div className="px-5 pt-[max(env(safe-area-inset-top),10px)] pb-2.5 flex items-center gap-2">
-          <img
-            src={brandLogo}
-            alt="떠나요 앱 로고"
-            width={28}
-            height={28}
-            className="w-7 h-7 rounded-[8px]"
-          />
-          <h1 className="text-[15px] font-bold text-foreground tracking-tight">
-            떠나요
-          </h1>
+      <header className="sticky top-0 z-40 bg-gradient-to-b from-[hsl(180_70%_92%)] to-[hsl(190_80%_88%)] border-b border-white/40">
+        <div className="px-5 pt-[max(env(safe-area-inset-top),12px)] pb-3 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <img
+              src={brandLogo}
+              alt="여행최저가앱 로고"
+              width={32}
+              height={32}
+              className="w-8 h-8 rounded-[10px] shadow-sm"
+            />
+            <h1 className="text-[16px] font-extrabold text-foreground tracking-tight">
+              여행최저가앱
+            </h1>
+          </div>
+          <span className="text-[11px] font-semibold text-foreground/70 bg-white/80 backdrop-blur px-2.5 py-1 rounded-full border border-white/60">
+            광고
+          </span>
         </div>
       </header>
 
-      {/* Hero banner */}
-      <section className="px-5">
-        <div className="relative rounded-[20px] overflow-hidden aspect-[16/9] shadow-[var(--shadow-card)]">
-          <img
-            src={heroImg}
-            alt="여행, 가장 저렴하게 떠나는 방법"
-            width={1024}
-            height={576}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
-          <div className="absolute inset-0 p-4 flex flex-col justify-end">
-            <span className="text-[10.5px] font-semibold text-white/85 mb-1">
-              오늘의 추천
-            </span>
-            <h2 className="text-white text-[18px] font-bold leading-[1.25] tracking-tight break-keep">
-              여행, 가장 저렴하게
-              <br />
-              떠나는 방법
-            </h2>
-          </div>
+      {/* Hero banner - 민트 그라디언트 + 큰 타이포 */}
+      <section className="bg-gradient-to-b from-[hsl(190_80%_88%)] via-[hsl(195_75%_92%)] to-[hsl(200_60%_97%)] px-5 pt-5 pb-6">
+        <span className="inline-block text-[11.5px] font-bold text-foreground bg-white/80 backdrop-blur px-3 py-1.5 rounded-full border border-white/70 shadow-sm">
+          여행 준비를 가장 빠르게
+        </span>
+        <h2 className="mt-4 text-foreground text-[30px] font-extrabold leading-[1.15] tracking-tight break-keep">
+          최저가 여행을
+          <br />
+          한눈에 비교
+        </h2>
+        <p className="mt-3 text-[13.5px] leading-relaxed text-foreground/75 break-keep">
+          숙소, eSIM, 투어, 렌터카까지 필요한 상품을 카테고리별로 모아 더 빠르게 비교할 수 있어요.
+        </p>
+        <div className="mt-4 bg-white/70 backdrop-blur border border-white/80 rounded-2xl px-4 py-3">
+          <p className="text-[12px] leading-relaxed text-foreground/75 break-keep">
+            이 앱은 제휴 링크를 포함하며, 링크 이동 또는 구매 시 운영자가 수수료를 받을 수 있습니다.
+          </p>
         </div>
       </section>
 
