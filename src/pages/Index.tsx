@@ -77,28 +77,20 @@ const Index = () => {
       </nav>
 
       {/* List */}
-      <section className="px-5 mt-5 space-y-3">
+      <section className="px-5 mt-4 bg-card rounded-2xl divide-y divide-border overflow-hidden shadow-[var(--shadow-soft)]">
         {filtered.map((p) => (
           <button
             key={p.id}
             onClick={() => handleClick(p.id, p.deeplink)}
-            className="w-full bg-card rounded-2xl p-4 flex items-center gap-4 shadow-[var(--shadow-soft)] active:scale-[0.99] transition-transform text-left"
+            className="w-full px-4 py-3 flex items-center gap-3 active:bg-muted transition-colors text-left"
           >
-            <div className="w-12 h-12 rounded-2xl bg-primary-soft flex items-center justify-center text-2xl shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center text-lg shrink-0">
               {p.emoji}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
-                <h3 className="font-bold text-foreground truncate">{p.name}</h3>
-                <span className="text-[11px] font-semibold text-accent-foreground bg-accent px-2 py-0.5 rounded-full">
-                  {p.category}
-                </span>
-              </div>
-              <p className="text-sm text-muted-foreground truncate mt-0.5">
-                {p.description}
-              </p>
+              <h3 className="font-semibold text-[15px] text-foreground truncate">{p.name}</h3>
             </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0" />
+            <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
           </button>
         ))}
 
