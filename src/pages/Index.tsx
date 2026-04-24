@@ -1,41 +1,31 @@
 import { useMemo, useState } from "react";
-import { Search, Send, Home, Heart, User } from "lucide-react";
+import { ArrowRight, Compass, Home, Heart, User } from "lucide-react";
 import { partners, categories, type Partner } from "@/data/partners";
-import heroImg from "@/assets/hero-traveler.jpg";
 
-const formatKRW = (n: number) => `₩${n.toLocaleString("ko-KR")}`;
+const formatKRW = (n: number) =>
+  n === 0 ? "0원" : `${n.toLocaleString("ko-KR")}원`;
 
 const Index = () => {
   const [active, setActive] = useState<(typeof categories)[number]>("전체");
-  const [query, setQuery] = useState("");
   const [tab, setTab] = useState<"home" | "fav" | "my">("home");
 
   const filtered = useMemo(() => {
-    return partners.filter((p) => {
-      const inCat = active === "전체" || p.category === active;
-      const inQuery =
-        !query.trim() ||
-        p.name.toLowerCase().includes(query.toLowerCase()) ||
-        p.description.toLowerCase().includes(query.toLowerCase());
-      return inCat && inQuery;
-    });
-  }, [active, query]);
+    const list =
+      active === "전체"
+        ? partners
+        : partners.filter((p) => p.category === active);
+    return [...list].sort((a, b) => b.discount - a.discount);
+  }, [active]);
 
-  const popular = useMemo(
-    () => [...partners].sort((a, b) => a.fromPrice - b.fromPrice).slice(0, 6),
-    []
-  );
-
-  // 카테고리별 그룹핑
-  const groups = useMemo(() => {
-    const order = categories.filter((c) => c !== "전체");
-    return order
-      .map((cat) => ({
-        cat,
-        items: filtered.filter((p) => p.category === cat),
-      }))
-      .filter((g) => g.items.length > 0);
-  }, [filtered]);
+  // 카테고리별 최저가 id 집합 (전체 partners 기준)
+  const lowestIds = useMemo(() => {
+    const map = new Map<string, Partner>();
+    for (const p of partners) {
+      const cur = map.get(p.category);
+      if (!cur || p.fromPrice < cur.fromPrice) map.set(p.category, p);
+    }
+    return new Set(Array.from(map.values()).map((p) => p.id));
+  }, []);
 
   const handleClick = (p: Partner) => {
     try {
@@ -46,12 +36,6 @@ const Index = () => {
     window.open(p.deeplink, "_blank", "noopener,noreferrer");
   };
 
-  const tagColor = (tag?: string) => {
-    if (tag === "인기") return "bg-primary text-primary-foreground";
-    if (tag === "특가") return "bg-destructive text-destructive-foreground";
-    return "bg-foreground text-background";
-  };
-
   return (
     <main className="min-h-screen bg-surface pb-24">
       {/* 제휴 고지 */}
@@ -60,95 +44,39 @@ const Index = () => {
       </div>
 
       {/* Top brand */}
-      <div className="px-5 pt-4 pb-3 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-primary-soft flex items-center justify-center">
-          <Send className="w-3.5 h-3.5 text-primary -rotate-12" />
+      <header className="px-5 pt-4 pb-3 flex items-center gap-2">
+        <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+          <Compass className="w-4 h-4 text-primary-foreground" strokeWidth={2.4} />
         </div>
         <h1 className="text-[15px] font-bold text-foreground tracking-tight">
-          여행 최저가
+          여행최저가
         </h1>
-      </div>
+      </header>
 
-      {/* Hero banner */}
+      {/* Hero CTA Card */}
       <section className="px-5">
-        <div className="relative rounded-[20px] overflow-hidden aspect-[16/9] shadow-[var(--shadow-card)]">
-          <img
-            src={heroImg}
-            alt="여행, 가장 저렴하게 떠나는 방법"
-            width={1024}
-            height={576}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
-          <div className="absolute inset-0 p-4 flex flex-col justify-end">
-            <span className="text-[10.5px] font-semibold text-white/85 mb-1">
-              오늘의 추천
-            </span>
-            <h2 className="text-white text-[18px] font-bold leading-[1.25] tracking-tight break-keep">
-              여행, 가장 저렴하게
-              <br />
-              떠나는 방법
-            </h2>
+        <div
+          className="relative rounded-[20px] overflow-hidden p-5 shadow-[var(--shadow-card)]"
+          style={{ background: "var(--gradient-hero)" }}
+        >
+          <div className="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/15 blur-2xl" />
+          <div className="absolute right-4 bottom-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+            <Compass className="w-6 h-6 text-white" strokeWidth={2.2} />
           </div>
-        </div>
-      </section>
-
-      {/* Search */}
-      <section className="px-5 mt-3">
-        <div className="flex items-center gap-2 bg-card border border-border rounded-full px-4 py-2.5 shadow-[var(--shadow-soft)]">
-          <Search className="w-[16px] h-[16px] text-muted-foreground shrink-0" />
-          <input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="어떤 여행 서비스를 찾으세요?"
-            className="flex-1 bg-transparent outline-none text-[13px] placeholder:text-muted-foreground min-w-0"
-          />
-        </div>
-      </section>
-
-      {/* 인기 가로 스크롤 */}
-      <section className="mt-5">
-        <h3 className="px-5 text-[14px] font-bold text-foreground mb-2.5">
-          지금 가장 인기있어요
-        </h3>
-        <div className="flex gap-2.5 overflow-x-auto no-scrollbar px-5 pb-1">
-          {popular.map((p) => (
-            <button
-              key={p.id}
-              onClick={() => handleClick(p)}
-              className="shrink-0 w-[140px] text-left active:scale-[0.98] transition-transform"
-            >
-              <div className="relative rounded-2xl overflow-hidden aspect-[4/5] shadow-[var(--shadow-soft)]">
-                <img
-                  src={p.image}
-                  alt={p.name}
-                  loading="lazy"
-                  width={140}
-                  height={175}
-                  className="w-full h-full object-cover"
-                />
-                {p.tag && (
-                  <span
-                    className={`absolute top-2 left-2 text-[10px] font-bold px-1.5 py-0.5 rounded-md ${tagColor(p.tag)}`}
-                  >
-                    {p.tag}
-                  </span>
-                )}
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent p-2.5 pt-8">
-                  <p className="text-white text-[13px] font-bold leading-tight truncate">
-                    {p.name}
-                  </p>
-                  <p className="text-white/80 text-[10.5px] truncate mt-0.5">
-                    {p.description}
-                  </p>
-                  <p className="text-white text-[11px] font-semibold mt-1 tabular-nums">
-                    {formatKRW(p.fromPrice)}
-                    <span className="opacity-70 font-medium">~/{p.unit}</span>
-                  </p>
-                </div>
-              </div>
-            </button>
-          ))}
+          <p className="text-white/85 text-[11px] font-semibold mb-1">
+            지금 가장 싼 여행
+          </p>
+          <h2 className="text-white text-[19px] font-extrabold leading-tight tracking-tight break-keep">
+            AI가 비교한
+            <br />
+            실시간 특가 목록
+          </h2>
+          <button
+            type="button"
+            className="mt-3.5 inline-flex items-center gap-1.5 bg-white text-primary text-[12.5px] font-bold rounded-full px-3.5 py-1.5 active:scale-[0.98] transition"
+          >
+            특가 소식 받기 <ArrowRight className="w-3.5 h-3.5" strokeWidth={2.6} />
+          </button>
         </div>
       </section>
 
@@ -174,67 +102,70 @@ const Index = () => {
         </div>
       </nav>
 
-      {/* 카테고리별 그룹 리스트 */}
-      <section className="px-5 mt-5 space-y-5">
-        {groups.map((g) => (
-          <div key={g.cat}>
-            <h3 className="text-[13.5px] font-bold text-foreground mb-2 px-0.5">
-              {g.cat}
-            </h3>
-            <div className="bg-card rounded-2xl border border-border/60 shadow-[var(--shadow-soft)] divide-y divide-border/60 overflow-hidden">
-              {g.items
-                .sort((a, b) => a.fromPrice - b.fromPrice)
-                .map((p, idx) => {
-                  const isMin = idx === 0 && g.items.length > 1;
-                  return (
-                    <button
-                      key={p.id}
-                      onClick={() => handleClick(p)}
-                      className="w-full px-3 py-2.5 flex items-center gap-3 active:bg-muted transition-colors text-left"
-                    >
-                      <img
-                        src={p.image}
-                        alt={p.name}
-                        loading="lazy"
-                        width={44}
-                        height={44}
-                        className="w-11 h-11 rounded-xl object-cover bg-muted shrink-0"
-                      />
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1.5 flex-wrap">
-                          <h4 className="font-bold text-[13.5px] text-foreground truncate">
-                            {p.name}
-                          </h4>
-                          {isMin && (
-                            <span className="text-[9.5px] font-bold text-primary bg-primary-soft px-1.5 py-px rounded">
-                              최저가
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-[11px] text-muted-foreground truncate mt-0.5">
-                          {p.description}
-                        </p>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <p
-                          className={`text-[13px] font-bold tabular-nums ${
-                            isMin ? "text-primary" : "text-foreground"
-                          }`}
-                        >
-                          {formatKRW(p.fromPrice)}
-                        </p>
-                        <p className="text-[10px] text-muted-foreground">
-                          ~ /{p.unit}
-                        </p>
-                      </div>
-                    </button>
-                  );
-                })}
-            </div>
-          </div>
-        ))}
+      {/* 실시간 인기 여행 딜 */}
+      <section className="px-5 mt-5">
+        <div className="flex items-end justify-between mb-3 px-0.5">
+          <h3 className="text-[15px] font-bold text-foreground tracking-tight">
+            실시간 인기 여행 딜
+          </h3>
+          <span className="text-[11px] text-muted-foreground font-medium">
+            업데이트순
+          </span>
+        </div>
 
-        {groups.length === 0 && (
+        <ul className="space-y-2.5">
+          {filtered.map((p) => {
+            const isLowest = lowestIds.has(p.id);
+            return (
+              <li key={p.id}>
+                <button
+                  onClick={() => handleClick(p)}
+                  className="w-full bg-card rounded-2xl p-3 flex items-center gap-3 shadow-[var(--shadow-card)] active:scale-[0.99] transition text-left"
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    loading="lazy"
+                    width={64}
+                    height={64}
+                    className="w-16 h-16 rounded-xl object-cover bg-muted shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 mb-1">
+                      <span className="text-[9.5px] font-extrabold text-muted-foreground bg-muted px-1.5 py-px rounded">
+                        AD
+                      </span>
+                      <span className="text-[11px] text-muted-foreground font-medium truncate">
+                        {p.name} · {p.brand}
+                      </span>
+                    </div>
+                    <p className="text-[13.5px] font-bold text-foreground leading-tight truncate break-keep">
+                      {p.description}
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-1.5">
+                      <span className="text-primary text-[14px] font-extrabold tabular-nums">
+                        {p.discount}%
+                      </span>
+                      <span className="text-foreground text-[13px] font-bold tabular-nums">
+                        {formatKRW(p.fromPrice)}
+                      </span>
+                      <span className="text-[10.5px] text-muted-foreground">
+                        ~/{p.unit}
+                      </span>
+                    </div>
+                  </div>
+                  {isLowest && (
+                    <span className="shrink-0 self-start text-[10px] font-bold text-primary bg-primary-soft px-2 py-1 rounded-md">
+                      최저가
+                    </span>
+                  )}
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+
+        {filtered.length === 0 && (
           <div className="text-center text-muted-foreground py-16 text-sm bg-card rounded-2xl border border-border">
             검색 결과가 없어요
           </div>
@@ -250,7 +181,7 @@ const Index = () => {
           <p className="text-[11px] leading-relaxed text-muted-foreground break-keep">
             본 서비스의 일부 링크는 링크프라이스 등 제휴 프로그램의 일환이며,
             이용자가 링크를 통해 상품을 구매·예약할 경우 운영자가 광고주로부터
-            일정액의 수수료를 받습니다. 표시된 가격은 참고용 시작가이며
+            일정액의 수수료를 받습니다. 표시된 할인율과 가격은 참고용이며
             시점·옵션·환율에 따라 달라질 수 있습니다.
           </p>
           <p className="text-[10px] leading-relaxed text-muted-foreground/80 break-keep">
@@ -277,7 +208,7 @@ const Index = () => {
                   on ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
-                <Icon className={`w-5 h-5 ${on ? "fill-foreground/0" : ""}`} strokeWidth={on ? 2.4 : 1.8} />
+                <Icon className="w-5 h-5" strokeWidth={on ? 2.4 : 1.8} />
                 <span className="text-[10.5px] font-semibold">{label}</span>
               </button>
             );
