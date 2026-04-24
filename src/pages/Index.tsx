@@ -60,19 +60,21 @@ const Index = () => {
         본 페이지는 제휴 마케팅의 일환으로 일정액의 수수료를 제공받습니다.
       </div>
 
-      {/* Top brand */}
-      <div className="px-5 pt-4 pb-3 flex items-center gap-2">
-        <img
-          src={brandLogo}
-          alt="앱 로고"
-          width={28}
-          height={28}
-          className="w-7 h-7 rounded-[8px]"
-        />
-        <h1 className="text-[15px] font-bold text-foreground tracking-tight">
-          여행 최저가
-        </h1>
-      </div>
+      {/* Top brand (앱 네비게이션 - 로고 + 앱이름 항상 노출) */}
+      <header className="sticky top-0 z-40 bg-card/95 backdrop-blur border-b border-border">
+        <div className="px-5 pt-[max(env(safe-area-inset-top),10px)] pb-2.5 flex items-center gap-2">
+          <img
+            src={brandLogo}
+            alt="떠나요 앱 로고"
+            width={28}
+            height={28}
+            className="w-7 h-7 rounded-[8px]"
+          />
+          <h1 className="text-[15px] font-bold text-foreground tracking-tight">
+            떠나요
+          </h1>
+        </div>
+      </header>
 
       {/* Hero banner */}
       <section className="px-5">
