@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import { Search, Send, Home, Heart, User } from "lucide-react";
+import { Search, Home, Heart, User } from "lucide-react";
 import { partners, categories, type Partner } from "@/data/partners";
 import heroImg from "@/assets/hero-traveler.jpg";
+import brandLogo from "@/assets/brand-logo.png";
 
 const formatKRW = (n: number) => `₩${n.toLocaleString("ko-KR")}`;
 
@@ -61,9 +62,13 @@ const Index = () => {
 
       {/* Top brand */}
       <div className="px-5 pt-4 pb-3 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-full bg-primary-soft flex items-center justify-center">
-          <Send className="w-3.5 h-3.5 text-primary -rotate-12" />
-        </div>
+        <img
+          src={brandLogo}
+          alt="앱 로고"
+          width={28}
+          height={28}
+          className="w-7 h-7 rounded-[8px]"
+        />
         <h1 className="text-[15px] font-bold text-foreground tracking-tight">
           여행 최저가
         </h1>
