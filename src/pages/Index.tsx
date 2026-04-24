@@ -94,11 +94,6 @@ const Index = () => {
         <p className="mt-3 text-[13.5px] leading-relaxed text-foreground/75 break-keep">
           숙소, eSIM, 투어, 렌터카까지 필요한 상품을 카테고리별로 모아 더 빠르게 비교할 수 있어요.
         </p>
-        <div className="mt-4 bg-white/70 backdrop-blur border border-white/80 rounded-2xl px-4 py-3">
-          <p className="text-[12px] leading-relaxed text-foreground/75 break-keep">
-            이 앱은 제휴 링크를 포함하며, 링크 이동 또는 구매 시 운영자가 수수료를 받을 수 있습니다.
-          </p>
-        </div>
       </section>
 
       {/* Search */}
