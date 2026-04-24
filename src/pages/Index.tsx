@@ -84,11 +84,17 @@ const Index = () => {
             onClick={() => handleClick(p.id, p.deeplink)}
             className="w-full px-4 py-3 flex items-center gap-3 active:bg-muted transition-colors text-left"
           >
-            <div className="w-9 h-9 rounded-xl bg-primary-soft flex items-center justify-center text-lg shrink-0">
-              {p.emoji}
-            </div>
+            <img
+              src={p.image}
+              alt={p.name}
+              loading="lazy"
+              width={40}
+              height={40}
+              className="w-10 h-10 rounded-xl object-cover shrink-0 bg-muted"
+            />
             <div className="flex-1 min-w-0">
               <h3 className="font-semibold text-[15px] text-foreground truncate">{p.name}</h3>
+              <p className="text-[12px] text-muted-foreground truncate mt-0.5">{p.description}</p>
             </div>
             <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
           </button>
