@@ -16,6 +16,12 @@ export type Partner = {
   description: string;
   image: string;
   deeplink: string;
+  /** 파트너사 노출 시작 가격 (KRW). 표시는 "₩{price}~" 형태 */
+  fromPrice: number;
+  /** 가격 단위 부가 설명 (예: 1박, 1일) */
+  unit: string;
+  /** 강조 태그 (예: 인기, 특가) */
+  tag?: string;
 };
 
 export const partners: Partner[] = [
@@ -26,6 +32,9 @@ export const partners: Partner[] = [
     description: "전 세계 호텔 최저가 비교",
     image: hotelscombinedImg,
     deeplink: "https://linkmoa.kr/click.php?m=hcombine2&a=A100704224&l=0000",
+    fromPrice: 38900,
+    unit: "1박",
+    tag: "인기",
   },
   {
     id: "agoda",
@@ -34,6 +43,9 @@ export const partners: Partner[] = [
     description: "아시아 호텔 특가",
     image: agodaImg,
     deeplink: "https://linkmoa.kr/click.php?m=agoda&a=A100704224&l=0000",
+    fromPrice: 32000,
+    unit: "1박",
+    tag: "특가",
   },
   {
     id: "rakutentr",
@@ -42,6 +54,8 @@ export const partners: Partner[] = [
     description: "일본 호텔·료칸 예약",
     image: rakutenImg,
     deeplink: "https://linkmoa.kr/click.php?m=rakutentr&a=A100704224&l=0000",
+    fromPrice: 54000,
+    unit: "1박",
   },
   {
     id: "klook",
@@ -50,6 +64,9 @@ export const partners: Partner[] = [
     description: "현지 투어와 입장권",
     image: klookImg,
     deeplink: "https://linkmoa.kr/click.php?m=klook&a=A100704224&l=0000",
+    fromPrice: 4900,
+    unit: "1인",
+    tag: "인기",
   },
   {
     id: "kkday",
@@ -58,6 +75,8 @@ export const partners: Partner[] = [
     description: "글로벌 액티비티 예약",
     image: kkdayImg,
     deeplink: "https://linkmoa.kr/click.php?m=kkday&a=A100704224&l=0000",
+    fromPrice: 5500,
+    unit: "1인",
   },
   {
     id: "myrealtrip",
@@ -66,6 +85,8 @@ export const partners: Partner[] = [
     description: "국내외 가이드 투어",
     image: myrealtripImg,
     deeplink: "https://linkmoa.kr/click.php?m=myrealtrip&a=A100704224&l=0000",
+    fromPrice: 9900,
+    unit: "1인",
   },
   {
     id: "usimsa",
@@ -74,6 +95,9 @@ export const partners: Partner[] = [
     description: "해외 데이터 유심",
     image: usimsaImg,
     deeplink: "https://linkmoa.kr/click.php?m=usimsa&a=A100704224&l=0000",
+    fromPrice: 3900,
+    unit: "1일",
+    tag: "특가",
   },
   {
     id: "airalo",
@@ -82,6 +106,8 @@ export const partners: Partner[] = [
     description: "전 세계 eSIM",
     image: airaloImg,
     deeplink: "https://linkmoa.kr/click.php?m=airalo&a=A100704224&l=0000",
+    fromPrice: 4500,
+    unit: "1GB",
   },
   {
     id: "jejupass",
@@ -90,6 +116,9 @@ export const partners: Partner[] = [
     description: "제주 렌터카 최저가",
     image: jejupassImg,
     deeplink: "https://linkmoa.kr/click.php?m=jejupass&a=A100704224&l=0000",
+    fromPrice: 19000,
+    unit: "1일",
+    tag: "인기",
   },
   {
     id: "rentalcars",
@@ -98,6 +127,8 @@ export const partners: Partner[] = [
     description: "전 세계 렌터카",
     image: rentalcarsImg,
     deeplink: "https://linkmoa.kr/click.php?m=rentalcars&a=A100704224&l=0000",
+    fromPrice: 24000,
+    unit: "1일",
   },
 ];
 
