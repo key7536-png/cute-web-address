@@ -1,0 +1,67 @@
+{
+  "$schema": "https://static.toss.im/ait/schema/v2.json",
+  "version": "2.0",
+  "app": {
+    "id": "find-my-fare",
+    "name": "여행최저가앱",
+    "shortName": "떠나요",
+    "description": "호텔·투어·eSIM·렌터카 최저가 비교",
+    "category": "travel",
+    "version": "1.0.0"
+  },
+  "build": {
+    "entry": "dist/index.html",
+    "outDir": "dist",
+    "publicPath": "./"
+  },
+  "runtime": {
+    "minTossVersion": "5.180.0",
+    "platform": ["ios", "android"],
+    "orientation": "portrait",
+    "statusBar": {
+      "style": "default",
+      "backgroundColor": "#FFFFFF"
+    },
+    "navigationBar": {
+      "visible": true,
+      "title": "여행최저가앱",
+      "backgroundColor": "#FFFFFF"
+    }
+  },
+  "permissions": [],
+  "webview": {
+    "userAgent": "TossAit/2.0",
+    "allowZoom": false,
+    "allowFileAccess": false,
+    "javascriptEnabled": true,
+    "domStorageEnabled": true,
+    "mixedContentMode": "never",
+    "thirdPartyCookies": false
+  },
+  "security": {
+    "allowedDomains": [
+      "*.lovable.app",
+      "*.toss.im",
+      "*.tosspayments.com"
+    ],
+    "csp": {
+      "default-src": "'self' https:",
+      "script-src": "'self' 'unsafe-inline' https:",
+      "style-src": "'self' 'unsafe-inline' https:",
+      "img-src": "'self' data: https:",
+      "connect-src": "'self' https:"
+    },
+    "blockExternalNavigation": false,
+    "requireUserGesture": true
+  },
+  "compliance": {
+    "affiliateDisclosure": true,
+    "ageRating": "all",
+    "privacyPolicyUrl": "https://cute-web-address.lovable.app/privacy",
+    "termsOfServiceUrl": "https://cute-web-address.lovable.app/terms"
+  },
+  "review": {
+    "testAccount": null,
+    "notes": "여행 상품 제휴 비교 서비스. 외부 결제는 파트너사로 이동 후 진행됩니다."
+  }
+}
