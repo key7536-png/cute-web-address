@@ -22,6 +22,10 @@ export type Partner = {
   unit: string;
   /** 강조 태그 (예: 인기, 특가) */
   tag?: string;
+  /** 영문 브랜드명 */
+  brand: string;
+  /** 표시용 할인율 (%) */
+  discount: number;
 };
 
 export const partners: Partner[] = [
