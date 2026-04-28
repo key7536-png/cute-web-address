@@ -1,15 +1,33 @@
 import { useMemo, useState } from "react";
-import { Search, Home, Heart, User } from "lucide-react";
+import { ChevronLeft, MoreHorizontal, Search, Home, Heart, User } from "lucide-react";
 import { partners, categories, type Partner } from "@/data/partners";
-import heroImg from "@/assets/hero-traveler.jpg";
 import brandLogo from "@/assets/brand-logo.png";
 
 const formatKRW = (n: number) => `₩${n.toLocaleString("ko-KR")}`;
+
+// ✅ 토스 미니앱 종료 함수
+const closeMiniApp = () => {
+  try {
+    // Toss bridge 환경
+    if (window.location !== window.parent.location) {
+      window.parent.postMessage({ type: "MINI_APP_CLOSE" }, "*");
+    }
+    // 히스토리가 없으면 창 닫기
+    if (window.history.length <= 1) {
+      window.close();
+    } else {
+      window.history.back();
+    }
+  } catch {
+    window.history.back();
+  }
+};
 
 const Index = () => {
   const [active, setActive] = useState<(typeof categories)[number]>("전체");
   const [query, setQuery] = useState("");
   const [tab, setTab] = useState<"home" | "fav" | "my">("home");
+  const [showMore, setShowMore] = useState(false);
 
   const filtered = useMemo(() => {
     return partners.filter((p) => {
@@ -27,7 +45,6 @@ const Index = () => {
     []
   );
 
-  // 카테고리별 그룹핑
   const groups = useMemo(() => {
     const order = categories.filter((c) => c !== "전체");
     return order
@@ -53,35 +70,71 @@ const Index = () => {
     return "bg-foreground text-background";
   };
 
+  // ✅ 공유 기능: intoss:// 스킴 사용
+  const handleShare = () => {
+    setShowMore(false);
+    const shareUrl = "intoss://share?url=" + encodeURIComponent(window.location.href);
+    try {
+      window.location.href = shareUrl;
+    } catch {
+      if (navigator.share) {
+        navigator.share({ title: "떠나요", url: window.location.href });
+      }
+    }
+  };
+
+  const handleReport = () => {
+    setShowMore(false);
+    alert("신고가 접수되었습니다.");
+  };
+
   return (
-    <main className="min-h-screen bg-surface pb-24">
+    <main className="min-h-screen bg-surface pb-32">
       {/* 제휴 고지 */}
       <div className="bg-foreground text-background text-[10.5px] leading-snug px-4 py-1.5 text-center">
         본 페이지는 제휴 마케팅의 일환으로 일정액의 수수료를 제공받습니다.
       </div>
 
-      {/* Top brand (앱 네비게이션 - 로고 + 앱이름 항상 노출) */}
-      <header className="sticky top-0 z-40 bg-gradient-to-b from-[hsl(255_60%_94%)] to-[hsl(265_65%_90%)] border-b border-white/40">
-        <div className="px-5 pt-[max(env(safe-area-inset-top),12px)] pb-3 flex items-center justify-between">
-          <div className="flex items-center gap-2">
+      {/* ✅ 토스 비게임 내비게이션 바
+          [좌] 뒤로가기(<)  [중앙] 브랜드로고 + 앱이름  [우] 더보기(⋯) */}
+      <header className="sticky top-0 z-40 bg-white border-b border-gray-100">
+        <div className="px-2 pt-[max(env(safe-area-inset-top),0px)] h-[52px] flex items-center justify-between">
+
+          {/* 좌측: 뒤로가기 버튼 */}
+          <button
+            onClick={closeMiniApp}
+            aria-label="뒤로가기"
+            className="w-10 h-10 flex items-center justify-center rounded-full active:bg-gray-100 transition-colors"
+          >
+            <ChevronLeft className="w-6 h-6 text-gray-800" strokeWidth={2.2} />
+          </button>
+
+          {/* 중앙: 브랜드 로고 + 미니앱 이름(국문) - 필수 */}
+          <div className="flex items-center gap-1.5 absolute left-1/2 -translate-x-1/2">
             <img
               src={brandLogo}
-              alt="여행최저가앱 로고"
-              width={32}
-              height={32}
-              className="w-8 h-8 rounded-[10px] shadow-sm"
+              alt="떠나요 로고"
+              width={24}
+              height={24}
+              className="w-6 h-6 rounded-[7px]"
             />
-            <h1 className="text-[16px] font-extrabold text-foreground tracking-tight">
-              여행최저가앱
-            </h1>
+            <span className="text-[16px] font-bold text-gray-900 tracking-tight">
+              떠나요
+            </span>
           </div>
-          <span className="text-[11px] font-semibold text-foreground/70 bg-white/80 backdrop-blur px-2.5 py-1 rounded-full border border-white/60">
-            광고
-          </span>
+
+          {/* 우측: 더보기(⋯) — 토스 공통 기능(신고, 공유) */}
+          <button
+            onClick={() => setShowMore(true)}
+            aria-label="더보기"
+            className="w-10 h-10 flex items-center justify-center rounded-full active:bg-gray-100 transition-colors"
+          >
+            <MoreHorizontal className="w-5 h-5 text-gray-800" />
+          </button>
         </div>
       </header>
 
-      {/* Hero banner - 라벤더 그라디언트 + 세련된 카피 */}
+      {/* Hero banner */}
       <section className="bg-gradient-to-b from-[hsl(265_65%_90%)] via-[hsl(260_55%_94%)] to-[hsl(255_50%_98%)] px-5 pt-5 pb-6">
         <span className="inline-block text-[11.5px] font-bold text-foreground bg-white/80 backdrop-blur px-3 py-1.5 rounded-full border border-white/70 shadow-sm">
           오늘의 여행, 가장 합리적으로
@@ -245,7 +298,7 @@ const Index = () => {
       </section>
 
       {/* Disclosure */}
-      <footer className="px-5 mt-7">
+      <footer className="px-5 mt-7 mb-4">
         <div className="bg-card rounded-2xl p-4 border border-border space-y-2">
           <p className="text-[12px] font-bold text-foreground">
             제휴 마케팅 안내 (광고)
@@ -263,30 +316,76 @@ const Index = () => {
         </div>
       </footer>
 
-      {/* Bottom Tab Bar */}
-      <nav className="fixed bottom-0 inset-x-0 bg-card/95 backdrop-blur border-t border-border z-30">
-        <div className="max-w-[640px] mx-auto grid grid-cols-3 px-2 pt-1.5 pb-[max(env(safe-area-inset-bottom),8px)]">
-          {[
-            { key: "home", label: "홈", icon: Home },
-            { key: "fav", label: "찜", icon: Heart },
-            { key: "my", label: "My", icon: User },
-          ].map(({ key, label, icon: Icon }) => {
-            const on = tab === key;
-            return (
-              <button
-                key={key}
-                onClick={() => setTab(key as typeof tab)}
-                className={`flex flex-col items-center gap-0.5 py-1.5 transition-colors ${
-                  on ? "text-foreground" : "text-muted-foreground"
-                }`}
-              >
-                <Icon className={`w-5 h-5 ${on ? "fill-foreground/0" : ""}`} strokeWidth={on ? 2.4 : 1.8} />
-                <span className="text-[10.5px] font-semibold">{label}</span>
-              </button>
-            );
-          })}
+      {/* ✅ 토스 스타일 플로팅 탭바
+          - 화면 좌우에서 띄운 형태 (full-width X)
+          - 둥근 pill 모양, 그림자 적용 */}
+      <nav className="fixed bottom-0 inset-x-0 z-30 flex justify-center pb-[max(env(safe-area-inset-bottom),16px)] px-6 pointer-events-none">
+        <div className="pointer-events-auto bg-white/95 backdrop-blur-md border border-gray-200/80 rounded-[28px] shadow-[0_8px_32px_rgba(0,0,0,0.12)] px-2 py-1">
+          <div className="flex items-center gap-1">
+            {[
+              { key: "home", label: "홈", icon: Home },
+              { key: "fav", label: "찜", icon: Heart },
+              { key: "my", label: "My", icon: User },
+            ].map(({ key, label, icon: Icon }) => {
+              const on = tab === key;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setTab(key as typeof tab)}
+                  className={`flex flex-col items-center gap-0.5 px-6 py-2 rounded-[22px] transition-all ${
+                    on
+                      ? "bg-gray-100 text-gray-900"
+                      : "text-gray-400"
+                  }`}
+                >
+                  <Icon
+                    className="w-[22px] h-[22px]"
+                    strokeWidth={on ? 2.4 : 1.8}
+                  />
+                  <span className={`text-[10px] font-semibold ${on ? "text-gray-900" : "text-gray-400"}`}>
+                    {label}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </nav>
+
+      {/* ✅ 더보기(⋯) 바텀시트 — 토스 공통 기능(신고, 공유) */}
+      {showMore && (
+        <>
+          {/* 딤 */}
+          <div
+            className="fixed inset-0 bg-black/40 z-50"
+            onClick={() => setShowMore(false)}
+          />
+          {/* 시트 */}
+          <div className="fixed bottom-0 inset-x-0 z-50 bg-white rounded-t-[24px] pb-[max(env(safe-area-inset-bottom),24px)] shadow-[0_-4px_24px_rgba(0,0,0,0.1)]">
+            <div className="w-10 h-1 bg-gray-200 rounded-full mx-auto mt-3 mb-4" />
+            <button
+              onClick={handleShare}
+              className="w-full px-6 py-4 flex items-center gap-3 text-[15px] font-medium text-gray-800 active:bg-gray-50 transition-colors"
+            >
+              공유하기
+            </button>
+            <div className="h-px bg-gray-100 mx-6" />
+            <button
+              onClick={handleReport}
+              className="w-full px-6 py-4 flex items-center gap-3 text-[15px] font-medium text-red-500 active:bg-gray-50 transition-colors"
+            >
+              신고하기
+            </button>
+            <div className="h-px bg-gray-100 mx-6" />
+            <button
+              onClick={() => setShowMore(false)}
+              className="w-full px-6 py-4 flex items-center justify-center text-[15px] font-medium text-gray-500 active:bg-gray-50 transition-colors"
+            >
+              닫기
+            </button>
+          </div>
+        </>
+      )}
     </main>
   );
 };
