@@ -167,7 +167,7 @@ const Index = () => {
 
       {/* ✨ 피처드 — 매거진 스타일 큰 카드 */}
       {featured && (
-        <section className="px-5 -mt-4 relative z-10 animate-fade-in">
+        <section className="px-5 mt-5 relative z-10 animate-fade-in">
           <button
             onClick={() => handleClick(featured)}
             className="block w-full text-left active:scale-[0.99] transition-transform"
