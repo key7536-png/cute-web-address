@@ -1,13 +1,7 @@
-import hotelscombinedImg from "@/assets/hotelscombined.jpg";
-import agodaImg from "@/assets/agoda.jpg";
-import rakutenImg from "@/assets/rakuten.jpg";
-import klookImg from "@/assets/klook.jpg";
-import kkdayImg from "@/assets/kkday.jpg";
-import myrealtripImg from "@/assets/myrealtrip.jpg";
-import usimsaImg from "@/assets/usimsa.jpg";
-import airaloImg from "@/assets/airalo.jpg";
-import jejupassImg from "@/assets/jejupass.jpg";
-import rentalcarsImg from "@/assets/rentalcars.jpg";
+import hotelImg from "@/assets/cat-hotel.jpg";
+import tourImg from "@/assets/cat-tour.jpg";
+import esimImg from "@/assets/cat-esim.jpg";
+import carImg from "@/assets/cat-car.jpg";
 
 export type Partner = {
   id: string;
@@ -30,7 +24,7 @@ export const partners: Partner[] = [
     name: "호텔스컴바인",
     category: "호텔",
     description: "전 세계 호텔 최저가 비교",
-    image: hotelscombinedImg,
+    image: hotelImg,
     deeplink: "https://linkmoa.kr/click.php?m=hcombine2&a=A100704224&l=0000",
     fromPrice: 38900,
     unit: "1박",
@@ -41,7 +35,7 @@ export const partners: Partner[] = [
     name: "아고다",
     category: "호텔",
     description: "아시아 호텔 특가",
-    image: agodaImg,
+    image: hotelImg,
     deeplink: "https://linkmoa.kr/click.php?m=agoda&a=A100704224&l=0000",
     fromPrice: 32000,
     unit: "1박",
@@ -52,7 +46,7 @@ export const partners: Partner[] = [
     name: "라쿠텐 트래블",
     category: "호텔",
     description: "일본 호텔·료칸 예약",
-    image: rakutenImg,
+    image: hotelImg,
     deeplink: "https://linkmoa.kr/click.php?m=rakutentr&a=A100704224&l=0000",
     fromPrice: 54000,
     unit: "1박",
@@ -62,7 +56,7 @@ export const partners: Partner[] = [
     name: "클룩",
     category: "투어·액티비티",
     description: "현지 투어와 입장권",
-    image: klookImg,
+    image: tourImg,
     deeplink: "https://linkmoa.kr/click.php?m=klook&a=A100704224&l=0000",
     fromPrice: 4900,
     unit: "1인",
@@ -73,7 +67,7 @@ export const partners: Partner[] = [
     name: "케이케이데이",
     category: "투어·액티비티",
     description: "글로벌 액티비티 예약",
-    image: kkdayImg,
+    image: tourImg,
     deeplink: "https://linkmoa.kr/click.php?m=kkday&a=A100704224&l=0000",
     fromPrice: 5500,
     unit: "1인",
@@ -83,7 +77,7 @@ export const partners: Partner[] = [
     name: "마이리얼트립",
     category: "투어·액티비티",
     description: "국내외 가이드 투어",
-    image: myrealtripImg,
+    image: tourImg,
     deeplink: "https://linkmoa.kr/click.php?m=myrealtrip&a=A100704224&l=0000",
     fromPrice: 9900,
     unit: "1인",
@@ -93,7 +87,7 @@ export const partners: Partner[] = [
     name: "유심사",
     category: "유심·eSIM",
     description: "해외 데이터 유심",
-    image: usimsaImg,
+    image: esimImg,
     deeplink: "https://linkmoa.kr/click.php?m=usimsa&a=A100704224&l=0000",
     fromPrice: 3900,
     unit: "1일",
@@ -104,7 +98,7 @@ export const partners: Partner[] = [
     name: "Airalo",
     category: "유심·eSIM",
     description: "전 세계 eSIM",
-    image: airaloImg,
+    image: esimImg,
     deeplink: "https://linkmoa.kr/click.php?m=airalo&a=A100704224&l=0000",
     fromPrice: 4500,
     unit: "1GB",
@@ -114,7 +108,7 @@ export const partners: Partner[] = [
     name: "제주패스",
     category: "렌터카",
     description: "제주 렌터카 최저가",
-    image: jejupassImg,
+    image: carImg,
     deeplink: "https://linkmoa.kr/click.php?m=jejupass&a=A100704224&l=0000",
     fromPrice: 19000,
     unit: "1일",
@@ -125,7 +119,7 @@ export const partners: Partner[] = [
     name: "렌탈카스",
     category: "렌터카",
     description: "전 세계 렌터카",
-    image: rentalcarsImg,
+    image: carImg,
     deeplink: "https://linkmoa.kr/click.php?m=rentalcars&a=A100704224&l=0000",
     fromPrice: 24000,
     unit: "1일",
