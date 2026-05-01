@@ -3,7 +3,7 @@
   "version": "2.0",
   "app": {
     "id": "find-my-fare",
-    "name": "여행최저가앱",
+    "name": "떠나요",
     "shortName": "떠나요",
     "description": "호텔·투어·eSIM·렌터카 최저가 비교",
     "category": "travel",
@@ -24,7 +24,7 @@
     },
     "navigationBar": {
       "visible": true,
-      "title": "여행최저가앱",
+      "title": "떠나요",
       "backgroundColor": "#FFFFFF"
     }
   },
