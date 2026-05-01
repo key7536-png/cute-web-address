@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { ChevronLeft, MoreHorizontal, Search, Home, Heart, User, Sparkles, MapPin } from "lucide-react";
 import { partners, categories, type Partner } from "@/data/partners";
 import brandLogo from "@/assets/brand-logo.png";
+import heroImg from "@/assets/hero-travel.jpg";
 
 const formatKRW = (n: number) => `₩${n.toLocaleString("ko-KR")}`;
 
@@ -127,46 +128,46 @@ const Index = () => {
         </div>
       </header>
 
-      {/* 🌅 Hero — 노을 그라데이션 */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-sunset" />
-        {/* 노을 위 별 효과 */}
-        <div className="absolute top-6 right-8 w-1.5 h-1.5 bg-white rounded-full opacity-80 animate-float" />
-        <div className="absolute top-12 right-20 w-1 h-1 bg-white rounded-full opacity-60" />
-        <div className="absolute top-20 right-12 w-0.5 h-0.5 bg-white rounded-full opacity-90" />
-        {/* 부드러운 페이드 */}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent to-surface" />
-
-        <div className="relative px-5 pt-7 pb-10">
-          <div className="inline-flex items-center gap-1.5 text-[11px] font-bold text-white bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/30 shadow-soft">
-            <Sparkles className="w-3 h-3" />
-            오늘의 여행, 가장 합리적으로
+      {/* 🏝️ Hero — 에어비앤비식 풀블리드 사진 */}
+      <section className="relative">
+        <div className="relative h-[340px] overflow-hidden">
+          <img
+            src={heroImg}
+            alt="떠나요"
+            className="w-full h-full object-cover"
+            loading="eager"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/45" />
+          <div className="absolute inset-x-0 bottom-0 p-6">
+            <p className="text-white/90 text-[11px] font-bold tracking-[0.12em] uppercase drop-shadow">
+              Today's pick · Santorini
+            </p>
+            <h2 className="mt-1.5 text-white text-[28px] font-extrabold leading-[1.15] tracking-tight drop-shadow-md break-keep">
+              떠나는 순간,<br />가장 좋은 가격으로.
+            </h2>
           </div>
-          <h2 className="mt-5 text-white text-[34px] font-extrabold leading-[1.1] tracking-tight break-keep drop-shadow-sm">
-            떠나는 모든 순간,
-            <br />
-            <span className="italic font-black">최저가의 기준.</span>
-          </h2>
-          <p className="mt-4 text-[13.5px] leading-relaxed text-white/90 break-keep max-w-[88%]">
-            숙소·eSIM·투어·렌터카까지 — 신뢰할 수 있는 브랜드의 가격을 한 화면에서 비교하세요.
-          </p>
+        </div>
 
-          {/* 검색 — 히어로 위에 띄움 */}
-          <div className="mt-6 flex items-center gap-2 bg-white/95 backdrop-blur-md rounded-2xl px-4 py-3 shadow-float">
-            <Search className="w-[18px] h-[18px] text-muted-foreground shrink-0" />
+        {/* 검색 — 히어로 위에 띄운 카드 */}
+        <div className="px-5 -mt-7 relative z-10">
+          <div className="flex items-center gap-2.5 bg-card rounded-full px-5 py-3.5 shadow-float border border-border/60">
+            <Search className="w-[18px] h-[18px] text-muted-foreground shrink-0" strokeWidth={2.4} />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="어디로 떠날까요?"
-              className="flex-1 bg-transparent outline-none text-[14px] placeholder:text-muted-foreground min-w-0 font-medium"
+              className="flex-1 bg-transparent outline-none text-[14px] placeholder:text-muted-foreground min-w-0 font-semibold"
             />
+            <div className="w-9 h-9 rounded-full bg-foreground flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-background" strokeWidth={2.4} />
+            </div>
           </div>
         </div>
       </section>
 
       {/* ✨ 피처드 — 매거진 스타일 큰 카드 */}
       {featured && (
-        <section className="px-5 -mt-4 relative z-10 animate-fade-in">
+        <section className="px-5 mt-5 relative z-10 animate-fade-in">
           <button
             onClick={() => handleClick(featured)}
             className="block w-full text-left active:scale-[0.99] transition-transform"

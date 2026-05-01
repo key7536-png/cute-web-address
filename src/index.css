@@ -8,58 +8,58 @@
 
 @layer base {
   :root {
-    /* Base — warm off-white, 종이 같은 따뜻한 베이스 */
-    --background: 30 40% 99%;
-    --foreground: 260 25% 12%;
+    /* Base — pure white, 에어비앤비/토스풍 클린 베이스 */
+    --background: 0 0% 100%;
+    --foreground: 220 15% 11%;
 
-    --surface: 25 50% 97%;
-    --surface-foreground: 260 25% 12%;
+    --surface: 0 0% 100%;
+    --surface-foreground: 220 15% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 260 25% 12%;
+    --card-foreground: 220 15% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 260 25% 12%;
+    --popover-foreground: 220 15% 11%;
 
-    /* Primary — 노을 코랄 (로고의 핵심 색) */
-    --primary: 12 90% 62%;
+    /* Primary — 에어비앤비식 라스베리 코랄 (절제된 포인트) */
+    --primary: 354 70% 54%;
     --primary-foreground: 0 0% 100%;
-    --primary-soft: 18 100% 95%;
-    --primary-glow: 350 95% 70%;
+    --primary-soft: 354 80% 96%;
+    --primary-glow: 354 75% 62%;
 
-    /* Secondary — 라벤더 트와일라잇 */
-    --secondary: 270 60% 65%;
+    /* Secondary — 차콜 (텍스트/아이콘 대비용) */
+    --secondary: 220 15% 18%;
     --secondary-foreground: 0 0% 100%;
-    --secondary-soft: 270 60% 95%;
+    --secondary-soft: 220 15% 95%;
 
-    /* Accent — 새벽 하늘 */
-    --accent: 200 85% 75%;
-    --accent-foreground: 220 50% 20%;
+    /* Accent — 잔잔한 스카이블루 */
+    --accent: 210 100% 50%;
+    --accent-foreground: 0 0% 100%;
 
-    --muted: 25 30% 94%;
-    --muted-foreground: 260 10% 45%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 25 30% 90%;
-    --input: 25 30% 90%;
-    --ring: 12 90% 62%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 354 70% 54%;
 
-    --radius: 1.25rem;
+    --radius: 1rem;
 
-    /* Shadows — 따뜻한 색조의 부드러운 그림자 */
-    --shadow-card: 0 1px 2px 0 hsl(20 30% 20% / 0.04), 0 8px 24px -8px hsl(12 60% 40% / 0.12);
-    --shadow-soft: 0 1px 3px 0 hsl(20 30% 20% / 0.05);
-    --shadow-glow: 0 8px 32px -4px hsl(12 90% 62% / 0.35);
-    --shadow-float: 0 12px 40px -8px hsl(280 40% 30% / 0.18);
+    /* Shadows — 절제된 뉴트럴 그림자 */
+    --shadow-card: 0 1px 2px 0 hsl(220 15% 15% / 0.04), 0 4px 16px -4px hsl(220 15% 15% / 0.08);
+    --shadow-soft: 0 1px 3px 0 hsl(220 15% 15% / 0.06);
+    --shadow-glow: 0 6px 24px -6px hsl(354 70% 54% / 0.28);
+    --shadow-float: 0 10px 32px -8px hsl(220 30% 15% / 0.14);
 
-    /* Signature gradients — 노을, 새벽, 트와일라잇 */
-    --gradient-sunset: linear-gradient(135deg, hsl(200 85% 78%) 0%, hsl(340 90% 75%) 45%, hsl(15 95% 65%) 100%);
-    --gradient-twilight: linear-gradient(160deg, hsl(270 70% 65%) 0%, hsl(330 85% 70%) 60%, hsl(20 95% 68%) 100%);
-    --gradient-dawn: linear-gradient(180deg, hsl(200 80% 88%) 0%, hsl(340 85% 88%) 100%);
-    --gradient-ember: linear-gradient(135deg, hsl(12 95% 62%) 0%, hsl(340 90% 60%) 100%);
-    --gradient-aurora: linear-gradient(135deg, hsl(220 70% 92%) 0%, hsl(280 60% 92%) 50%, hsl(340 80% 92%) 100%);
+    /* Signature gradients — 절제된 코랄→핑크 */
+    --gradient-sunset: linear-gradient(135deg, hsl(354 75% 58%) 0%, hsl(340 85% 62%) 100%);
+    --gradient-twilight: linear-gradient(135deg, hsl(220 15% 18%) 0%, hsl(220 20% 28%) 100%);
+    --gradient-dawn: linear-gradient(180deg, hsl(0 0% 100%) 0%, hsl(220 14% 97%) 100%);
+    --gradient-ember: linear-gradient(135deg, hsl(354 75% 56%) 0%, hsl(20 90% 60%) 100%);
+    --gradient-aurora: linear-gradient(135deg, hsl(220 14% 97%) 0%, hsl(354 80% 97%) 100%);
 
     --sidebar-background: 30 40% 99%;
     --sidebar-foreground: 260 25% 20%;
