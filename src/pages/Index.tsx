@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { ChevronLeft, MoreHorizontal, Search, Home, Heart, User, Sparkles, MapPin } from "lucide-react";
 import { partners, categories, type Partner } from "@/data/partners";
 import brandLogo from "@/assets/brand-logo.png";
+import heroImg from "@/assets/hero-travel.jpg";
 
 const formatKRW = (n: number) => `₩${n.toLocaleString("ko-KR")}`;
 
