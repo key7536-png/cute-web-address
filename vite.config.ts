@@ -15,6 +15,11 @@ export default defineConfig(({ mode }) => ({
     },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  build: {
+    // 토스 AIT WebView (구형 iOS/Android) 호환
+    target: ["es2015", "safari12", "chrome70"],
+    cssTarget: ["safari12", "chrome70"],
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
